@@ -172,36 +172,35 @@ wd="/dev/shm/3dpitmp"
 #mkdir -pv ./3DPIcons/tmp
 mkdir -pv $wd
 mkdir -pv ./3DPIcons/$s-$t
-#cp -fv ./3DPrinting_Icons_Inkscape.svg $wd/source.svg
-#
-#inkscape --with-gui --verb "LayerShowAll;FileSave;FileQuit" $wd/source.svg
-#
-#inkscape --export-type="png"  --export-id="$bg" \
-#         --export-width=256 --export-height=256 --export-id-only --export-area-page --export-background-opacity=0\
-#         --export-filename="$wd/$bg.png" $wd/source.svg
-#
-#for ((i=0; i<${#icon[@]};i++))
-#    do
-#    echo "prnting  ${icon[$i]}"
-#    echo "icon name ${icon_name[$i]}"
-#      ids=${icon[$i]}
-#      fname=${icon_name[$i]}
-#     cp $wd/$bg.png $wd/tmp_$fname.png
-#     IFS=$';'
-#      for j in $ids
-#      do
-#        echo $j
-#        inkscape --export-type="png"  --export-id="$j" \
-#                 --export-width=256 --export-height=256 --export-id-only --export-area-page --export-background-opacity=0 \
-#                 --export-filename="$wd/$j.png" $wd/source.svg
-#
-#        magick composite -gravity center $wd/$j.png $wd/tmp_$fname.png $wd/tmp_$fname.png
-#        magick convert $wd/tmp_$fname.png -resize "$s"x"$s" -antialias ./3DPIcons/$s-$t/$fname.$t
-#    done
-#    unset IFS
-#    
-#done
-echo "$p"
+cp -fv ./3DPrinting_Icons_Inkscape.svg $wd/source.svg
+
+inkscape --with-gui --verb "LayerShowAll;FileSave;FileQuit" $wd/source.svg
+
+inkscape --export-type="png"  --export-id="$bg" \
+         --export-width=256 --export-height=256 --export-id-only --export-area-page --export-background-opacity=0\
+         --export-filename="$wd/$bg.png" $wd/source.svg
+
+for ((i=0; i<${#icon[@]};i++))
+    do
+    echo "prnting  ${icon[$i]}"
+    echo "icon name ${icon_name[$i]}"
+      ids=${icon[$i]}
+      fname=${icon_name[$i]}
+     cp $wd/$bg.png $wd/tmp_$fname.png
+     IFS=$';'
+      for j in $ids
+      do
+        echo $j
+        inkscape --export-type="png"  --export-id="$j" \
+                 --export-width=256 --export-height=256 --export-id-only --export-area-page --export-background-opacity=0 \
+                 --export-filename="$wd/$j.png" $wd/source.svg
+
+        magick composite -gravity center $wd/$j.png $wd/tmp_$fname.png $wd/tmp_$fname.png
+        magick convert $wd/tmp_$fname.png -resize "$s"x"$s" -antialias ./3DPIcons/$s-$t/$fname.$t
+    done
+    unset IFS
+    
+done
 
 if [ "$p" == "y" ]; then
     shopt -s nullglob
@@ -209,7 +208,7 @@ if [ "$p" == "y" ]; then
     magick montage "${src[@]}" -geometry 96x96+5+5 -tile 6x -shadow -background none ./3DPIcons/$s-$t/preview.png
 fi
 
-#rm -rfv $wd
+rm -rfv $wd
 
 
 # Template for future, when Inkscape hopefully will work as expected
