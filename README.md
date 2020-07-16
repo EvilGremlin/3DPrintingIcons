@@ -2,7 +2,7 @@
 ### work in progress
 
 A set of stylish icons for 3D printing and CNC in general.
-
+Ideas and requests are welcomed.
 
 ![preview](preview.png?raw=true "Preview")
 
