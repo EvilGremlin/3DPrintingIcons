@@ -28,6 +28,7 @@ fi
 eval set -- "$PARSED"
 
 h=n t="png" s=64 b=2 p=n
+
 # now enjoy the options in order and nicely split until we see --
 while true; do
     case "$1" in
@@ -101,13 +102,19 @@ icon_name+=("hotend")   icon+=("g927")
 icon_name+=("hotend_temp")  icon+=("g927;layer3")
 icon_name+=("hotend1_temp") icon+=("g927;layer3;g919")
 icon_name+=("hotend2_temp") icon+=("g927;layer3;layer1")
+icon_name+=("hotend3_temp") icon+=("g927;layer3;g10252")
+icon_name+=("hotend_spool")  icon+=("g927;layer45")
+icon_name+=("hotend1_spool") icon+=("g927;layer46;g919")
+icon_name+=("hotend2_spool") icon+=("g927;layer46;layer1")
+icon_name+=("hotend3_spool") icon+=("g927;layer46;g10252")
 
 # BED STUFF
 icon_name+=("bed")  icon+=("g3942") 
 icon_name+=("bed_leveling") icon+=("g3942;g935")
 icon_name+=("bed_temp_v0")  icon+=("g3942;layer3")
 icon_name+=("bed_temp_v1")  icon+=("g3942;layer3;layer4")
-icon_name+=("bed_temp_v2")  icon+=("g3942;layer3;g911")  
+icon_name+=("bed_temp_v2")  icon+=("g3942;layer3;g911")
+icon_name+=("bed_z_offset")  icon+=("g1622;layer47;g3942")
 
 # CHAMBER STUFF
 icon_name+=("chamber")  icon+=("layer2")
@@ -139,6 +146,7 @@ icon_name+=("home_"Y1)  icon+=("layer13;g1468")
 icon_name+=("home_Y2")  icon+=("layer13;g1462")
 icon_name+=("home_Z")  icon+=("layer13;layer16")
 icon_name+=("home_all")  icon+=("layer13;layer17")
+icon_name+=("move_all")  icon+=("layer43")
 
 # MACHINE
 icon_name+=("machine_prusa")  icon+=("layer30")
@@ -156,7 +164,10 @@ icon_name+=("cogs_1")  icon+=("layer25")
 icon_name+=("cogs_2")  icon+=("layer26")
 icon_name+=("cog_1")  icon+=("layer27")
 icon_name+=("cog_2")  icon+=("layer28")
-icon_name+=("stepper")  icon+=("layer29")
+icon_name+=("stepper_v1")  icon+=("layer29")
+icon_name+=("stepper_v2")  icon+=("g12324")
+icon_name+=("stepper_off")  icon+=("g12324;layer48")
+icon_name+=("spool")  icon+=("layer44")
 
 #icon_name+=("")  icon+=("")
 
@@ -168,13 +179,17 @@ bgs+=("layer5")     # 2 plain beige
 
 bg=${bgs[$b]}
 
+echo "Downloading ImageMagick as an AppImage because all deb packages are broken now..."
+wget -c -O ./magick "https://download.imagemagick.org/ImageMagick/download/binaries/magick" 
+chmod +x ./magick
+
 wd="/dev/shm/3dpitmp"
 #mkdir -pv ./3DPIcons/tmp
 mkdir -pv $wd
 mkdir -pv ./3DPIcons/$s-$t
 cp -fv ./3DPrinting_Icons_Inkscape.svg $wd/source.svg
 
-inkscape --with-gui --verb "LayerShowAll;FileSave;FileQuit" $wd/source.svg
+inkscape --batch-process --verb "LayerShowAll;FileSave;FileQuit" $wd/source.svg
 
 inkscape --export-type="png"  --export-id="$bg" \
          --export-width=256 --export-height=256 --export-id-only --export-area-page --export-background-opacity=0\
@@ -195,8 +210,8 @@ for ((i=0; i<${#icon[@]};i++))
                  --export-width=256 --export-height=256 --export-id-only --export-area-page --export-background-opacity=0 \
                  --export-filename="$wd/$j.png" $wd/source.svg
 
-        magick composite -gravity center $wd/$j.png $wd/tmp_$fname.png $wd/tmp_$fname.png
-        magick convert $wd/tmp_$fname.png -resize "$s"x"$s" -antialias ./3DPIcons/$s-$t/$fname.$t
+        ./magick composite -gravity center $wd/$j.png $wd/tmp_$fname.png $wd/tmp_$fname.png
+        ./magick convert $wd/tmp_$fname.png -resize "$s"x"$s" -antialias ./3DPIcons/$s-$t/$fname.$t
     done
     unset IFS
     
@@ -205,23 +220,23 @@ done
 if [ "$p" == "y" ]; then
     shopt -s nullglob
     src=($wd/tmp_*)
-    magick montage "${src[@]}" -geometry 96x96+5+5 -tile 6x -shadow -background none ./3DPIcons/$s-$t/preview.png
+    ./magick montage "${src[@]}" -geometry 96x96+5+5 -tile 6x -shadow -background none ./3DPIcons/$s-$t/preview.png
 fi
 
-rm -rfv $wd
-
-
 # Template for future, when Inkscape hopefully will work as expected
-#
-#for ((i=0; i<${#icon[@]};i++))
+# 
+# for ((i=0; i<${#icon[@]};i++))
 #    do
 #      ids=${icon[$i]}
 #      fname=${icon_name[$i]}
-#        inkscape --export-type="$t"  --export-id="$bg;$ids" \
+#        inkscape --batch-process --export-type="$t"  --export-id="$bg;$ids" \
 #                 --export-width="${s}" --export-height="${s}" --export-id-only --export-area-page\
-#                 --export-filename="./3DPIcons/$s/$fname.$t" \
-#                ./3Dicon_Icons_Inkscape.svg
-#done
+#                 --export-filename="./3DPIcons/$s-$t/$fname.$t" \
+#                ./3DPrinting_Icons_Inkscape.svg
+# done
+
+
+rm -rfv $wd
 
 
 
