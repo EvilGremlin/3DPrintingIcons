@@ -91,13 +91,14 @@ fi
 declare -a icon_name
 declare -a icon
 
-# icon STUFF
-icon_name+=("print_flow")   icon+=("g3836;g110")
-icon_name+=("print_speed")  icon+=("g3836;g1014")
-icon_name+=("print_cool_v1")    icon+=("g3836;g1360")
-icon_name+=("print_cool_v2")    icon+=("g3836;g3868")
+# PRINTING
+icon_name+=("printing_flow")   icon+=("g3836;g110")
+icon_name+=("printing_speed")  icon+=("g3836;g1014")
+icon_name+=("printing_tune")  icon+=("g3836;layer53")
+icon_name+=("printing_cool_v1")    icon+=("g3836;g1360")
+icon_name+=("printing_cool_v2")    icon+=("g3836;g3868")
 
-# HOTENDS STUFF
+# HOTENDS
 icon_name+=("hotend")   icon+=("g927")
 icon_name+=("hotend_temp")  icon+=("g927;layer3")
 icon_name+=("hotend1_temp") icon+=("g927;layer3;g919")
@@ -108,7 +109,7 @@ icon_name+=("hotend1_spool") icon+=("g1622;layer46;g919")
 icon_name+=("hotend2_spool") icon+=("g1622;layer46;layer1")
 icon_name+=("hotend3_spool") icon+=("g1622;layer46;g10252")
 
-# BED STUFF
+# BED
 icon_name+=("bed")  icon+=("g3942") 
 icon_name+=("bed_leveling") icon+=("g3942;g935")
 icon_name+=("bed_temp_v0")  icon+=("g3942;layer3")
@@ -116,7 +117,7 @@ icon_name+=("bed_temp_v1")  icon+=("g3942;layer3;layer4")
 icon_name+=("bed_temp_v2")  icon+=("g3942;layer3;g911")
 icon_name+=("bed_z_offset")  icon+=("g1622;layer47;g3942")
 
-# CHAMBER STUFF
+# CHAMBER
 icon_name+=("chamber")  icon+=("layer2")
 icon_name+=("chamber_temp") icon+=("layer2;layer3")
 icon_name+=("chamber_light") icon+=("layer2;layer18")
@@ -131,13 +132,16 @@ icon_name+=("chamber_fan_v2_on")  icon+=("layer2;layer23;layer19")
 icon_name+=("chamber_fan_v2_off")  icon+=("layer2;layer23;layer20")
 icon_name+=("chamber_fan_v2_speed")  icon+=("layer2;layer23;layer24")
 
-# MOVEMENT STUFF
+# MOVEMENT
 icon_name+=("move_X")  icon+=("layer6;layer8")
 icon_name+=("move_Y")  icon+=("layer6;g1615")
 icon_name+=("move_Z")  icon+=("layer6;g1607")
 icon_name+=("move_E")  icon+=("g927;layer9")
 icon_name+=("move_E1")  icon+=("g927;layer9;g919")
 icon_name+=("move_E2")  icon+=("g927;layer9;layer1")
+icon_name+=("move_E_wheel")  icon+=("g927;layer9;layer66")
+icon_name+=("move_E_up")  icon+=("g927;layer68;layer66")
+icon_name+=("move_E_down")  icon+=("g927;layer67;layer66")
 icon_name+=("home_X")  icon+=("layer13;layer14")
 icon_name+=("home_X1")  icon+=("layer13;g1456")
 icon_name+=("home_X2")  icon+=("layer13;g1450")
@@ -175,12 +179,8 @@ icon_name+=("light_on")  icon+=("layer52;layer55;layer50")
 icon_name+=("light_off")  icon+=("layer52;layer51")
 icon_name+=("light_off_norays")  icon+=("layer52;layer51")
 icon_name+=("light")  icon+=("layer52;layer55")
-icon_name+=("")  icon+=("")
-icon_name+=("")  icon+=("")
-icon_name+=("")  icon+=("")
-icon_name+=("")  icon+=("")
-icon_name+=("")  icon+=("")
-icon_name+=("")  icon+=("")
+icon_name+=("light_cog")  icon+=("layer52;layer55;layer54")
+icon_name+=("host_start_octoprint")  icon+=("layer69")
 
 # ARROWS & COMMON CONTROLS
 icon_name+=("up")  icon+=("layer57")
@@ -206,25 +206,37 @@ icon_name+=("minus_c")  icon+=("layer58;layer64")
 icon_name+=("check_c")  icon+=("layer58;layer62")
 icon_name+=("cross_c")  icon+=("layer58;layer61")
 
-icon_name+=("")  icon+=("")
-icon_name+=("")  icon+=("")
-icon_name+=("")  icon+=("")
-icon_name+=("")  icon+=("")
-icon_name+=("")  icon+=("")
-icon_name+=("")  icon+=("")
-icon_name+=("")  icon+=("")
-icon_name+=("")  icon+=("")
-icon_name+=("")  icon+=("")
-icon_name+=("")  icon+=("")
-icon_name+=("")  icon+=("")
-icon_name+=("")  icon+=("")
-icon_name+=("")  icon+=("")
+icon_name+=("start_big")  icon+=("layer71")
+icon_name+=("stop_big")  icon+=("layer72")
+icon_name+=("pause_big")  icon+=("layer73")
+icon_name+=("forward_v1_big")  icon+=("layer74")
+icon_name+=("backward_v1_big")  icon+=("layer75")
+icon_name+=("start_small_p")  icon+=("layer59;layer70")
+icon_name+=("stop__small_p")  icon+=("layer59;layer76")
+icon_name+=("pause_small_p")  icon+=("layer59;layer77")
+icon_name+=("forward_v1_small_p")  icon+=("layer59;layer78")
+icon_name+=("backward_v1_small_p")  icon+=("layer59;layer79")
+icon_name+=("start_small_c")  icon+=("layer58;layer70")
+icon_name+=("stop__small_c")  icon+=("layer58;layer76")
+icon_name+=("pause_small_c")  icon+=("layer58;layer77")
+icon_name+=("forward_v1_small_c")  icon+=("layer58;layer78")
+icon_name+=("backward_v1_small_c")  icon+=("layer58;layer79")
+icon_name+=("back_v1")  icon+=("layer80")
+icon_name+=("back_v2")  icon+=("layer87")
+icon_name+=("enter_v1")  icon+=("layer81")
+icon_name+=("enter_v2")  icon+=("layer86")
+icon_name+=("undo_v1")  icon+=("layer83")
+icon_name+=("undo_v2")  icon+=("layer84")
+icon_name+=("undo_v3")  icon+=("layer89")
+icon_name+=("redo_v1")  icon+=("layer82")
+icon_name+=("redo_v2")  icon+=("layer88")
+icon_name+=("redo_v3")  icon+=("layer85")
 
 
-#icon_name+=("")  icon+=("")
+#icon_name+=("")  icon+=("layer")
 
 declare -a bgs
-
+# 
 bgs+=("layer34")    # 0 empty 
 bgs+=("layer33")    # 1 plain white
 bgs+=("layer5")     # 2 plain beige
@@ -274,6 +286,15 @@ if [ "$p" == "y" ]; then
     src=($wd/tmp_*)
     ./magick montage "${src[@]}" -geometry 96x96+5+5 -tile 6x -shadow -background none ./3DPIcons/$s-$t/preview.png
 fi
+
+# function dropshadow () {
+#     filename=$(basename -- "$1")
+#     #extension="${filename##*.}"
+#     basename="${filename%.*}"
+#     #we want to enforce png (even if .jpg as input)
+#     suffix="_shadow.png"
+#     convert "$1" \( +clone -background black -shadow 50x10+5+5 \) +swap -background none -layers merge +repage "$basename$suffix"
+# }
 
 # Template for future, when Inkscape hopefully will work as expected
 # 
